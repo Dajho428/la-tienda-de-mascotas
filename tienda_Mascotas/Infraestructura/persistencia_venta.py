@@ -5,7 +5,7 @@ from tienda_Mascotas.Dominio.inventario import Inventario
 from tienda_Mascotas.Dominio.venta import Venta
 
 
-class PersistenciaVenta:
+class Persistencia_venta:
     def __init__(self):
         self.con = sqlite3.connect("la_tienda_de_mascotas.sqlite")
 

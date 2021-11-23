@@ -27,16 +27,16 @@ class Cliente(Persona):
         self.tiempoCliente = nuevoTiempo
 
     def guardar(self, cliente):
-        from tienda_Mascotas.Infraestructura.persistenciaCliente import PersistenciaCliente
-        persitencia_cliente = PersistenciaCliente()
+        from tienda_Mascotas.Infraestructura.persistencia_cliente import Persistencia_cliente
+        persitencia_cliente = Persistencia_cliente()
         persitencia_cliente.guardar_cliente(cliente)
 
     def guardar_actualizar(self):
         self._actualizar(self.codigoCliente)
 
     def _actualizar(self, codigoCliente):
-        from tienda_Mascotas.Infraestructura.persistenciaCliente import PersistenciaCliente
-        persitencia_cliente = PersistenciaCliente()
+        from tienda_Mascotas.Infraestructura.persistencia_cliente import Persistencia_cliente
+        persitencia_cliente = Persistencia_cliente()
         persitencia_cliente.actualizar_cliente(self, codigoCliente)
 
     def update(self, dict_params):
@@ -51,6 +51,6 @@ class Cliente(Persona):
         self.tiempoCliente = dict_params.get('tiempoCliente', self.tiempoCliente)
 
     def eliminar(self, codigoCliente):
-        from tienda_Mascotas.Infraestructura.persistenciaCliente import PersistenciaCliente
-        persisten_cliente = PersistenciaCliente()
+        from tienda_Mascotas.Infraestructura.persistencia_cliente import Persistencia_cliente
+        persisten_cliente = Persistencia_cliente()
         persisten_cliente.eliminar_cliente(codigoCliente)

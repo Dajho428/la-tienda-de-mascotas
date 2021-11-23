@@ -3,13 +3,13 @@ import waitress
 from falcon import App
 
 from tienda_Mascotas.Dominio.alimento import Alimento
-from tienda_Mascotas.Infraestructura.persistenciaAlimento import PersistenciaAlimento
+from tienda_Mascotas.Infraestructura.persistencia_alimento import Persistencia_alimento
 
 
-class alimento():
+class Alimento():
 
     def on_get(self, req, resp):
-        db = PersistenciaAlimento()
+        db = Persistencia_alimento()
         alimentos = db.consultar_tabla_alimento()
         template = """<!-- #######  YAY, I AM THE SOURCE EDITOR! #########-->
                     <h1 style="color: #5e9ca0;">La tienda del CAMI</h1>
@@ -45,7 +45,7 @@ class alimento():
         resp.status = falcon.HTTP_CREATED
 
     def on_put(self, req, resp, codigoAlimento):
-        alimento_repositorio = PersistenciaAlimento()
+        alimento_repositorio = Persistencia_alimento()
         alimento = alimento_repositorio.cargar_alimento(codigoAlimento)
         alimento.update(req.media)
         alimento.codigoAlimento = codigoAlimento
@@ -53,7 +53,7 @@ class alimento():
         resp.body = alimento.__dict__
 
     def on_delete(self, req, resp, codigoAlimento):
-        alimento_repositorio = PersistenciaAlimento()
+        alimento_repositorio = Persistencia_alimento()
         alimento = alimento_repositorio.cargar_alimento(codigoAlimento)
         alimento.eliminar(alimento.codigoAlimento)
         resp.body = codigoAlimento
@@ -62,10 +62,10 @@ class alimento():
 
 def iniciar(api) -> App:
     # run:app -b 0.0.0.0:2020 --workers 1 -t 240
-    api.add_route("/alimento/", alimento())
-    api.add_route("/alimento_guardar/", alimento())
-    api.add_route("/alimento_actualizar/{codigoAlimento}", alimento())
-    api.add_route("/alimento_eliminar/{codigoAlimento}", alimento())
+    api.add_route("/alimento/", Alimento())
+    api.add_route("/alimento_guardar/", Alimento())
+    api.add_route("/alimento_actualizar/{codigoAlimento}", Alimento())
+    api.add_route("/alimento_eliminar/{codigoAlimento}", Alimento())
     return api
 
 

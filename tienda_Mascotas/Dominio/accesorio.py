@@ -2,10 +2,10 @@ import uuid
 
 import jsonpickle
 
-from tienda_Mascotas.Dominio.elementoCompra import ElementoCompra
+from tienda_Mascotas.Dominio.elemento_compra import Elemento_compra
 
 
-class Accesorio(ElementoCompra):
+class Accesorio(Elemento_compra):
     def __init__(self, codigoAccesorio, nombre, precio,cantidad,
                  descripcionAccesorio,usoAccesorio):
         super().__init__(cantidad, precio)
@@ -27,16 +27,16 @@ class Accesorio(ElementoCompra):
         return True
 
     def guardar(self, accesorio):
-        from tienda_Mascotas.Infraestructura.persistenciaAccesorio import PersistenciaAccesorio
-        persitencia_accesorio = PersistenciaAccesorio()
+        from tienda_Mascotas.Infraestructura.persistencia_accesorio import Persistencia_accesorio
+        persitencia_accesorio = Persistencia_accesorio()
         persitencia_accesorio.guardar_accesorio(accesorio)
 
     def guardar_actualizar(self):
         self._actualizar(self.codigoAccesorio)
 
     def _actualizar(self, codigoAccesorio):
-        from tienda_Mascotas.Infraestructura.persistenciaAccesorio import PersistenciaAccesorio
-        persitencia_accesorio = PersistenciaAccesorio()
+        from tienda_Mascotas.Infraestructura.persistencia_accesorio import Persistencia_accesorio
+        persitencia_accesorio = Persistencia_accesorio()
         persitencia_accesorio.actualizar_accesorio(self, codigoAccesorio)
 
     def update(self, dict_params):
@@ -48,6 +48,6 @@ class Accesorio(ElementoCompra):
         self.usoAccesorio = dict_params.get('usoAccesorio', self.usoAccesorio)
 
     def eliminar(self, codigoAccesorio):
-        from tienda_Mascotas.Infraestructura.persistenciaAccesorio import PersistenciaAccesorio
-        persisten_accesorio = PersistenciaAccesorio()
+        from tienda_Mascotas.Infraestructura.persistencia_accesorio import Persistencia_accesorio
+        persisten_accesorio = Persistencia_accesorio()
         persisten_accesorio.eliminar_accesorio(codigoAccesorio)

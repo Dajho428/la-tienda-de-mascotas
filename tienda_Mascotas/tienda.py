@@ -6,33 +6,31 @@ from tienda_Mascotas.Dominio.cliente import Cliente
 from tienda_Mascotas.Dominio.empleado import Empleado
 from tienda_Mascotas.Dominio.venta import Venta
 
-from tienda_Mascotas.Infraestructura.persistenciaAccesorio import PersistenciaAccesorio
-from tienda_Mascotas.Infraestructura.persistenciaAlimento import PersistenciaAlimento
-from tienda_Mascotas.Infraestructura.persistenciaCliente import PersistenciaCliente
-from tienda_Mascotas.Infraestructura.persistenciaEmpleado import PersistenciaEmpleado
-from tienda_Mascotas.Infraestructura.persistenciaMascota import PersistenciaMascota
+from tienda_Mascotas.Infraestructura.persistencia_accesorio import Persistencia_accesorio
+from tienda_Mascotas.Infraestructura.persistencia_alimento import Persistencia_alimento
+from tienda_Mascotas.Infraestructura.persistencia_cliente import Persistencia_cliente
+from tienda_Mascotas.Infraestructura.persistencia_empleado import Persistencia_empleado
+from tienda_Mascotas.Infraestructura.persistencia_mascota import Persistencia_mascota
 from tienda_Mascotas.Dominio.especificacion import Especificacion
 import requests
-from tienda_Mascotas.Infraestructura.configuracion import Configuracion
-import os
 
-from tienda_Mascotas.Infraestructura.persistenciaVenta import PersistenciaVenta
+from tienda_Mascotas.Infraestructura.persistencia_venta import Persistencia_venta
 
 
 class Tienda():
 
     def generarInventario(self):
-        saverMascota = PersistenciaMascota()
+        saverMascota = Persistencia_mascota()
         saverMascota.connect()
-        saverAccesorios = PersistenciaAccesorio()
+        saverAccesorios = Persistencia_accesorio()
         saverAccesorios.connect()
-        saverAlimentos = PersistenciaAlimento()
+        saverAlimentos = Persistencia_alimento()
         saverAlimentos.connect()
-        saverCliente = PersistenciaCliente()
+        saverCliente = Persistencia_cliente()
         saverCliente.connect()
-        saverEmpleado = PersistenciaEmpleado()
+        saverEmpleado = Persistencia_empleado()
         saverEmpleado.connect()
-        saverVenta = PersistenciaVenta()
+        saverVenta = Persistencia_venta()
         saverVenta.connect()
         inventario = Inventario()
         mascotas = saverMascota.consultar_tabla_mascota()
@@ -58,17 +56,17 @@ if __name__ == '__main__':
     """Primero declaramos la persistencia y luego utilizamos el metodo saver.connect cuando iniciamos la aplicacion
     esto genera la base de datos sqlite y las tablas de la entitades que necesitamos con sus atributos"""
 
-    saverMascota = PersistenciaMascota()
+    saverMascota = Persistencia_mascota()
     saverMascota.connect()
-    saverAccesorios = PersistenciaAccesorio()
+    saverAccesorios = Persistencia_accesorio()
     saverAccesorios.connect()
-    saverAlimentos = PersistenciaAlimento()
+    saverAlimentos = Persistencia_alimento()
     saverAlimentos.connect()
-    saverCliente = PersistenciaCliente()
+    saverCliente = Persistencia_cliente()
     saverCliente.connect()
-    saverEmpleado = PersistenciaEmpleado()
+    saverEmpleado = Persistencia_empleado()
     saverEmpleado.connect()
-    saverVenta = PersistenciaVenta()
+    saverVenta = Persistencia_venta()
     saverVenta.connect()
 
     # def actualizarMascota(inventario):

@@ -3,13 +3,13 @@ import waitress
 from falcon import App
 
 from tienda_Mascotas.Dominio.cliente import Cliente
-from tienda_Mascotas.Infraestructura.persistenciaCliente import PersistenciaCliente
+from tienda_Mascotas.Infraestructura.persistencia_cliente import Persistencia_cliente
 
 
-class cliente():
+class Cliente():
 
     def on_get(self, req, resp):
-        db = PersistenciaCliente()
+        db = Persistencia_cliente()
         clientes = db.consultar_tabla_cliente()
         template = """<!-- #######  YAY, I AM THE SOURCE EDITOR! #########-->
                     <h1 style="color: #5e9ca0;">La tienda del CAMI</h1>
@@ -45,7 +45,7 @@ class cliente():
         resp.status = falcon.HTTP_CREATED
 
     def on_put(self, req, resp, codigoCliente):
-        cliente_repositorio = PersistenciaCliente()
+        cliente_repositorio = Persistencia_cliente()
         cliente = cliente_repositorio.cargar_cliente(codigoCliente)
         cliente.update(req.media)
         cliente.codigoCliente = codigoCliente
@@ -53,7 +53,7 @@ class cliente():
         resp.body = cliente.__dict__
 
     def on_delete(self, req, resp, codigoCliente):
-        cliente_repositorio = PersistenciaCliente()
+        cliente_repositorio = Persistencia_cliente()
         cliente = cliente_repositorio.cargar_cliente(codigoCliente)
         cliente.eliminar(cliente.codigoCliente)
         resp.body = codigoCliente
@@ -62,10 +62,10 @@ class cliente():
 
 def iniciar(api) -> App:
     # run:app -b 0.0.0.0:2020 --workers 1 -t 240
-    api.add_route("/cliente/", cliente())
-    api.add_route("/cliente_guardar/", cliente())
-    api.add_route("/cliente_actualizar/{codigoCliente}", cliente())
-    api.add_route("/cliente_eliminar/{codigoCliente}/", cliente())
+    api.add_route("/cliente/", Cliente())
+    api.add_route("/cliente_guardar/", Cliente())
+    api.add_route("/cliente_actualizar/{codigoCliente}", Cliente())
+    api.add_route("/cliente_eliminar/{codigoCliente}/", Cliente())
     return api
 
 

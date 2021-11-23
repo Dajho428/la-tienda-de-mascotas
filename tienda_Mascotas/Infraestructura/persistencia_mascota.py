@@ -2,10 +2,9 @@ import sqlite3
 import jsonpickle
 
 from tienda_Mascotas.Dominio.mascota import Mascota
-from tienda_Mascotas.Infraestructura.configuracion import Configuracion
 
 
-class PersistenciaMascota:
+class Persistencia_mascota:
     def __init__(self):
         self.con = sqlite3.connect("la_tienda_de_mascotas.sqlite")
 
@@ -67,32 +66,3 @@ class PersistenciaMascota:
         cursor.execute(query, (codigoMascota,))
         self.con.commit()
 
-    @classmethod
-    def save_json_mascota(cls, mascota):
-        text_open = open("files/" + str(mascota.codigoMascota) + '.jsonMascota', mode='w')
-        json_gui = jsonpickle.encode(mascota)
-        text_open.write(json_gui)
-        text_open.close()
-
-    @classmethod
-    def load_json_mascota(cls, file_name):
-        text_open = open("files/" + file_name, mode='r')
-        json_gui = text_open.readline()
-        mascota = jsonpickle.decode(json_gui)
-        text_open.close()
-        return mascota
-
-    @classmethod
-    def save_json_configuracion(cls, configuracion: Configuracion):
-        text_open = open("files/" + str(configuracion.codigoUnico) + '.json', mode='w')
-        json_gui = jsonpickle.encode(configuracion)
-        text_open.write(json_gui)
-        text_open.close()
-
-    @classmethod
-    def load_json_configuracion(cls, file_name):
-        text_open = open("files/" + file_name, mode='r')
-        json_gui = text_open.readline()
-        configuracion = jsonpickle.decode(json_gui)
-        text_open.close()
-        return configuracion

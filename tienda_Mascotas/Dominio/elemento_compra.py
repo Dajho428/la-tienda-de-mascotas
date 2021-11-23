@@ -1,4 +1,4 @@
-class ElementoCompra():
+class Elemento_compra():
 
     def __init__(self, cantidad, precio):
         self.cantidad = cantidad

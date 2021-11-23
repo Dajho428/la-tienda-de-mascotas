@@ -2,12 +2,12 @@ import falcon
 from falcon import App
 
 from tienda_Mascotas.Dominio.accesorio import Accesorio
-from tienda_Mascotas.Infraestructura.persistenciaAccesorio import PersistenciaAccesorio
+from tienda_Mascotas.Infraestructura.persistencia_accesorio import Persistencia_accesorio
 
 
-class accesorio():
+class Accesorio():
     def on_get(self, req, resp):
-        db = PersistenciaAccesorio()
+        db = Persistencia_accesorio()
         accesorios = db.consultar_tabla_accesorio()
         template = """<!-- #######  YAY, I AM THE SOURCE EDITOR! #########-->
                     <h1 style="color: #5e9ca0;">La tienda del CAMI</h1>
@@ -48,7 +48,7 @@ class accesorio():
         resp.status = falcon.HTTP_CREATED
 
     def on_put(self, req, resp, codigoAccesorio):
-        accesorio_repositorio = PersistenciaAccesorio()
+        accesorio_repositorio = Persistencia_accesorio()
         accesorio = accesorio_repositorio.cargar_accesorio(codigoAccesorio)
         accesorio.update(req.media)
         accesorio.codigoAccesorio = codigoAccesorio
@@ -56,7 +56,7 @@ class accesorio():
         resp.body = accesorio.__dict__
 
     def on_delete(self, req, resp, codigoAccesorio):
-        accesorio_repositorio = PersistenciaAccesorio()
+        accesorio_repositorio = Persistencia_accesorio()
         accesorio = accesorio_repositorio.cargar_accesorio(codigoAccesorio)
         accesorio.eliminar(accesorio.codigoAccesorio)
         resp.body = codigoAccesorio
@@ -65,10 +65,10 @@ class accesorio():
 
 def iniciar(api) -> App:
 
-    api.add_route("/accesorio/", accesorio())
-    api.add_route("/accesorio_guardar/", accesorio())
-    api.add_route("/accesorio_actualizar/{codigoAccesorio}",accesorio())
-    api.add_route("/accesorio_eliminar/{codigoAccesorio}", accesorio())
+    api.add_route("/accesorio/", Accesorio())
+    api.add_route("/accesorio_guardar/", Accesorio())
+    api.add_route("/accesorio_actualizar/{codigoAccesorio}", Accesorio())
+    api.add_route("/accesorio_eliminar/{codigoAccesorio}", Accesorio())
     return api
 
 

@@ -5,7 +5,7 @@ import jsonpickle
 from tienda_Mascotas.Dominio.alimento import Alimento
 
 
-class PersistenciaAlimento:
+class Persistencia_alimento:
     def __init__(self):
         self.con = sqlite3.connect("la_tienda_de_mascotas.sqlite")
 
@@ -66,18 +66,3 @@ class PersistenciaAlimento:
         cursor = self.con.cursor()
         cursor.execute(query, (codigoAlimento,))
         self.con.commit()
-
-    @classmethod
-    def save_json_alimento(cls, alimento):
-        text_open = open("files/" + str(alimento.codigoAlimento) + '.jsonAlimento', mode='w')
-        json_gui = jsonpickle.encode(alimento)
-        text_open.write(json_gui)
-        text_open.close()
-
-    @classmethod
-    def load_json_alimento(cls, file_name):
-        text_open = open("files/" + file_name, mode='r')
-        json_gui = text_open.readline()
-        alimento = jsonpickle.decode(json_gui)
-        text_open.close()
-        return alimento

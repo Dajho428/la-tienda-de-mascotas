@@ -1,12 +1,12 @@
 import waitress
 from falcon import App
 
-from tienda_Mascotas.apiVenta import iniciar as venta_routes
-from tienda_Mascotas.apiAlimento import iniciar as alimento_routes
-from tienda_Mascotas.apiCliente import iniciar as cliente_routes
-from tienda_Mascotas.apiMascota import iniciar as cliente_mascota
-from tienda_Mascotas.apiEmpleado import iniciar as cliente_empleado
-from tienda_Mascotas.apiAccesorio import iniciar as cliente_accesorio
+from tienda_Mascotas.api_venta import iniciar as venta_routes
+from tienda_Mascotas.api_alimento import iniciar as alimento_routes
+from tienda_Mascotas.api_cliente import iniciar as cliente_routes
+from tienda_Mascotas.api_mascota import iniciar as cliente_mascota
+from tienda_Mascotas.api_empleado import iniciar as cliente_empleado
+from tienda_Mascotas.api_accesorio import iniciar as cliente_accesorio
 
 
 def iniciar() -> App:

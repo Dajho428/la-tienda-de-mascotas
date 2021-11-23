@@ -3,13 +3,13 @@ import falcon
 import waitress as waitress
 from falcon import App
 from tienda_Mascotas.Dominio.mascota import Mascota
-from tienda_Mascotas.Infraestructura.persistenciaMascota import PersistenciaMascota
+from tienda_Mascotas.Infraestructura.persistencia_mascota import Persistencia_mascota
 
 
-class mascota():
+class Mascota():
 
     def on_get(self, req, resp):
-        db = PersistenciaMascota()
+        db = Persistencia_mascota()
         mascotas = db.consultar_tabla_mascota()
         template = """<!-- #######  YAY, I AM THE SOURCE EDITOR! #########-->
                     <h1 style="color: #5e9ca0;">La tienda del CAMI</h1>
@@ -47,7 +47,7 @@ class mascota():
         resp.status = falcon.HTTP_CREATED
 
     def on_put(self, req, resp, codigoMascota):
-        mascota_repositorio = PersistenciaMascota()
+        mascota_repositorio = Persistencia_mascota()
         mascota = mascota_repositorio.cargar_mascota(codigoMascota)
         mascota.update(req.media)
         mascota.codigoMascota = codigoMascota
@@ -55,7 +55,7 @@ class mascota():
         resp.body = mascota.__dict__
 
     def on_delete(self, req, resp, codigoMascota):
-        mascota_repositorio = PersistenciaMascota()
+        mascota_repositorio = Persistencia_mascota()
         mascota = mascota_repositorio.cargar_mascota(codigoMascota)
         mascota.eliminar(mascota.codigoMascota)
         resp.body = codigoMascota
@@ -64,9 +64,9 @@ class mascota():
 
 def iniciar(api) -> App:
     # run:app -b 0.0.0.0:2020 --workers 1 -t 240
-    api.add_route("/mascota/", mascota())
-    api.add_route("/mascota_guardar/", mascota())
-    api.add_route("/mascota_actualizar/{codigoMascota}", mascota())
-    api.add_route("/mascota_eliminar/{codigoMascota}", mascota())
+    api.add_route("/mascota/", Mascota())
+    api.add_route("/mascota_guardar/", Mascota())
+    api.add_route("/mascota_actualizar/{codigoMascota}", Mascota())
+    api.add_route("/mascota_eliminar/{codigoMascota}", Mascota())
     return api
 

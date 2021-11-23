@@ -26,6 +26,6 @@ class Venta():
         return True
 
     def guardar(self, venta,codigoCliente,codigoEmpleado):
-        from tienda_Mascotas.Infraestructura.persistenciaVenta import PersistenciaVenta
-        persitencia_venta = PersistenciaVenta()
+        from tienda_Mascotas.Infraestructura.persistencia_venta import Persistencia_venta
+        persitencia_venta = Persistencia_venta()
         persitencia_venta.guardar_venta(venta,codigoCliente,codigoEmpleado)

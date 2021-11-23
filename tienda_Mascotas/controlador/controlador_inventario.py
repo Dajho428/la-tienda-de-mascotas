@@ -1,25 +1,25 @@
 from tienda_Mascotas.Dominio.inventario import Inventario
-from tienda_Mascotas.Infraestructura.persistenciaAccesorio import PersistenciaAccesorio
-from tienda_Mascotas.Infraestructura.persistenciaAlimento import PersistenciaAlimento
-from tienda_Mascotas.Infraestructura.persistenciaCliente import PersistenciaCliente
-from tienda_Mascotas.Infraestructura.persistenciaEmpleado import PersistenciaEmpleado
-from tienda_Mascotas.Infraestructura.persistenciaMascota import PersistenciaMascota
-from tienda_Mascotas.Infraestructura.persistenciaVenta import PersistenciaVenta
+from tienda_Mascotas.Infraestructura.persistencia_accesorio import Persistencia_accesorio
+from tienda_Mascotas.Infraestructura.persistencia_alimento import Persistencia_alimento
+from tienda_Mascotas.Infraestructura.persistencia_cliente import Persistencia_cliente
+from tienda_Mascotas.Infraestructura.persistencia_empleado import Persistencia_empleado
+from tienda_Mascotas.Infraestructura.persistencia_mascota import Persistencia_mascota
+from tienda_Mascotas.Infraestructura.persistencia_venta import Persistencia_venta
 
 
-class ControladorInventario():
+class Controlador_inventario():
     def __init__(self):
-        self.saverMascota = PersistenciaMascota()
+        self.saverMascota = Persistencia_mascota()
         self.saverMascota.connect()
-        self.saverAccesorios = PersistenciaAccesorio()
+        self.saverAccesorios = Persistencia_accesorio()
         self.saverAccesorios.connect()
-        self.saverAlimentos = PersistenciaAlimento()
+        self.saverAlimentos = Persistencia_alimento()
         self.saverAlimentos.connect()
-        self.saverCliente = PersistenciaCliente()
+        self.saverCliente = Persistencia_cliente()
         self.saverCliente.connect()
-        self.saverEmpleado = PersistenciaEmpleado()
+        self.saverEmpleado = Persistencia_empleado()
         self.saverEmpleado.connect()
-        self.saverVenta = PersistenciaVenta()
+        self.saverVenta = Persistencia_venta()
         self.saverVenta.connect()
 
     def generarInventario(self):

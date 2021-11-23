@@ -37,16 +37,16 @@ class Empleado(Persona):
         return True
 
     def guardar(self, empleado):
-        from tienda_Mascotas.Infraestructura.persistenciaEmpleado import PersistenciaEmpleado
-        persitencia_empleado = PersistenciaEmpleado()
+        from tienda_Mascotas.Infraestructura.persistencia_empleado import Persistencia_empleado
+        persitencia_empleado = Persistencia_empleado()
         persitencia_empleado.guardar_empleado(empleado)
 
     def guardar_actualizar(self):
         self._actualizar(self.codigo)
 
     def _actualizar(self, codigo):
-        from tienda_Mascotas.Infraestructura.persistenciaEmpleado import PersistenciaEmpleado
-        persitencia_empleado = PersistenciaEmpleado()
+        from tienda_Mascotas.Infraestructura.persistencia_empleado import Persistencia_empleado
+        persitencia_empleado = Persistencia_empleado()
         persitencia_empleado.actualizar_empleado(self, codigo)
 
     def update(self, dict_params):
@@ -63,6 +63,6 @@ class Empleado(Persona):
         self.horario = dict_params.get('horario', self.horario)
 
     def eliminar(self, codigoEmpleado):
-        from tienda_Mascotas.Infraestructura.persistenciaEmpleado import PersistenciaEmpleado
-        persisten_empleado = PersistenciaEmpleado()
+        from tienda_Mascotas.Infraestructura.persistencia_empleado import Persistencia_empleado
+        persisten_empleado = Persistencia_empleado()
         persisten_empleado.eliminar_empleado(codigoEmpleado)

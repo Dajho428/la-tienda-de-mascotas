@@ -5,7 +5,7 @@ import jsonpickle
 from tienda_Mascotas.Dominio.cliente import Cliente
 
 
-class PersistenciaCliente:
+class Persistencia_cliente:
     def __init__(self):
         self.con = sqlite3.connect("la_tienda_de_mascotas.sqlite")
 
@@ -70,17 +70,3 @@ class PersistenciaCliente:
         cursor.execute(query, (codigoCliente,))
         self.con.commit()
 
-    @classmethod
-    def save_json_cliente(cls, cliente):
-        text_open = open("files/" + str(cliente.codigoCliente) + '.jsonCliente', mode='w')
-        json_gui = jsonpickle.encode(cliente)
-        text_open.write(json_gui)
-        text_open.close()
-
-    @classmethod
-    def load_json_cliente(cls, file_name):
-        text_open = open("files/" + file_name, mode='r')
-        json_gui = text_open.readline()
-        cliente = jsonpickle.decode(json_gui)
-        text_open.close()
-        return cliente

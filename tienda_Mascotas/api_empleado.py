@@ -3,13 +3,13 @@ import waitress
 from falcon import App
 
 from tienda_Mascotas.Dominio.empleado import Empleado
-from tienda_Mascotas.Infraestructura.persistenciaEmpleado import PersistenciaEmpleado
+from tienda_Mascotas.Infraestructura.persistencia_empleado import Persistencia_empleado
 
 
-class empleado():
+class Empleado():
 
     def on_get(self, req, resp):
-        db = PersistenciaEmpleado()
+        db = Persistencia_empleado()
         empleados = db.consultar_tabla_empleado()
         template = """<!-- #######  YAY, I AM THE SOURCE EDITOR! #########-->
                     <h1 style="color: #5e9ca0;">La tienda del CAMI</h1>
@@ -45,7 +45,7 @@ class empleado():
         resp.status = falcon.HTTP_CREATED
 
     def on_put(self, req, resp, codigoEmpleado):
-        empleado_repositorio = PersistenciaEmpleado()
+        empleado_repositorio = Persistencia_empleado()
         empleado = empleado_repositorio.cargar_empleado(codigoEmpleado)
         empleado.update(req.media)
         empleado.codigo = codigoEmpleado
@@ -53,7 +53,7 @@ class empleado():
         resp.body = empleado.__dict__
 
     def on_delete(self, req, resp, codigoEmpleado):
-        empleado_repositorio = PersistenciaEmpleado()
+        empleado_repositorio = Persistencia_empleado()
         empleado = empleado_repositorio.cargar_empleado(codigoEmpleado)
         empleado.eliminar(empleado.codigo)
         resp.body = codigoEmpleado
@@ -62,9 +62,9 @@ class empleado():
 
 def iniciar(api) -> App:
     # run:app -b 0.0.0.0:2020 --workers 1 -t 240
-    api.add_route("/empleado/", empleado())
-    api.add_route("/empleado_guardar/", empleado())
-    api.add_route("/empleado_actualizar/{codigoEmpleado}", empleado())
-    api.add_route("/empleado_eliminar/{codigoEmpleado}", empleado())
+    api.add_route("/empleado/", Empleado())
+    api.add_route("/empleado_guardar/", Empleado())
+    api.add_route("/empleado_actualizar/{codigoEmpleado}", Empleado())
+    api.add_route("/empleado_eliminar/{codigoEmpleado}", Empleado())
     return api
 
