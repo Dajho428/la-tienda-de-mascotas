@@ -7,7 +7,7 @@ from tienda_Mascotas.Infraestructura.persistencia_venta import Persistencia_vent
 from tienda_Mascotas.controlador.controlador_inventario import Controlador_inventario
 
 
-class Venta():
+class Api_venta():
 
     def on_get(self, req, resp):
         controlInven=Controlador_inventario()
@@ -45,7 +45,7 @@ class Venta():
         resp.status = falcon.HTTP_OK
 
     def on_post(self, req, resp):
-        venta = Venta(**req.media)
+        venta = Api_venta(**req.media)
         venta.guardar(venta,venta.codigoCliente,venta.codigo)
         resp.status = falcon.HTTP_CREATED
 
@@ -54,8 +54,8 @@ class Venta():
 
 def iniciar(api) -> App:
     # run:app -b 0.0.0.0:2020 --workers 1 -t 240
-    api.add_route("/venta/", Venta())
-    api.add_route("/venta_guardar/", Venta())
+    api.add_route("/venta/", Api_venta())
+    api.add_route("/venta_guardar/", Api_venta())
 
     return api
 

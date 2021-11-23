@@ -6,7 +6,7 @@ from tienda_Mascotas.Dominio.empleado import Empleado
 from tienda_Mascotas.Infraestructura.persistencia_empleado import Persistencia_empleado
 
 
-class Empleado():
+class Api_empleado():
 
     def on_get(self, req, resp):
         db = Persistencia_empleado()
@@ -40,7 +40,7 @@ class Empleado():
         resp.status = falcon.HTTP_OK
 
     def on_post(self, req, resp):
-        empleado = Empleado(**req.media)
+        empleado = Api_empleado(**req.media)
         empleado.guardar(empleado)
         resp.status = falcon.HTTP_CREATED
 
@@ -62,9 +62,9 @@ class Empleado():
 
 def iniciar(api) -> App:
     # run:app -b 0.0.0.0:2020 --workers 1 -t 240
-    api.add_route("/empleado/", Empleado())
-    api.add_route("/empleado_guardar/", Empleado())
-    api.add_route("/empleado_actualizar/{codigoEmpleado}", Empleado())
-    api.add_route("/empleado_eliminar/{codigoEmpleado}", Empleado())
+    api.add_route("/empleado/", Api_empleado())
+    api.add_route("/empleado_guardar/", Api_empleado())
+    api.add_route("/empleado_actualizar/{codigoEmpleado}", Api_empleado())
+    api.add_route("/empleado_eliminar/{codigoEmpleado}", Api_empleado())
     return api
 
