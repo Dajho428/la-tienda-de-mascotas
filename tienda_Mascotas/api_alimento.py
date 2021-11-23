@@ -40,7 +40,7 @@ class Api_alimento():
         resp.status = falcon.HTTP_OK
 
     def on_post(self, req, resp):
-        alimento = Api_alimento(**req.media)
+        alimento = Alimento(**req.media)
         alimento.guardar(alimento)
         resp.status = falcon.HTTP_CREATED
 

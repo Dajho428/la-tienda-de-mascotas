@@ -40,7 +40,7 @@ class Api_cliente():
         resp.status = falcon.HTTP_OK
 
     def on_post(self, req, resp):
-        cliente = Api_cliente(**req.media)
+        cliente = Cliente(**req.media)
         cliente.guardar(cliente)
         resp.status = falcon.HTTP_CREATED
 

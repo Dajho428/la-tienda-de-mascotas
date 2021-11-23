@@ -43,7 +43,7 @@ class Api_accesorio():
         resp.status = falcon.HTTP_OK
 
     def on_post(self, req, resp):
-        accesorio = Api_accesorio(**req.media)
+        accesorio = Accesorio(**req.media)
         accesorio.guardar(accesorio)
         resp.status = falcon.HTTP_CREATED
 

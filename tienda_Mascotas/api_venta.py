@@ -45,7 +45,7 @@ class Api_venta():
         resp.status = falcon.HTTP_OK
 
     def on_post(self, req, resp):
-        venta = Api_venta(**req.media)
+        venta = Venta(**req.media)
         venta.guardar(venta,venta.codigoCliente,venta.codigo)
         resp.status = falcon.HTTP_CREATED
 

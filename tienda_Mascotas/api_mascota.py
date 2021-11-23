@@ -41,7 +41,7 @@ class Api_mascota():
         resp.status = falcon.HTTP_OK
 
     def on_post(self, req, resp):
-        mascota = Api_mascota(**req.media)
+        mascota = Mascota(**req.media)
         mascota.guardar(mascota)
         resp.status = falcon.HTTP_CREATED
 

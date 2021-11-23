@@ -40,7 +40,7 @@ class Api_empleado():
         resp.status = falcon.HTTP_OK
 
     def on_post(self, req, resp):
-        empleado = Api_empleado(**req.media)
+        empleado = Empleado(**req.media)
         empleado.guardar(empleado)
         resp.status = falcon.HTTP_CREATED
 
