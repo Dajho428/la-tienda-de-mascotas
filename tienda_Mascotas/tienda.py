@@ -138,7 +138,7 @@ if __name__ == '__main__':
                 mascota = Mascota(codigoMascota, tipo_mascota, raza, nombre, edad, precioMascota, cantidadMascota)
                 try:
                     inventario.agregar_mascota(mascota)
-                    url = "http://localhost:2020/mascota_guardar/"
+                    url = "https://tienda-mascota.herokuapp.com/mascota_guardar/"
                     body = {
                         "codigoMascota": codigoMascota,
                         "tipoMascota": tipo_mascota,
@@ -166,7 +166,7 @@ if __name__ == '__main__':
                                     precioAlimento)
                 try:
                     inventario.agregar_alimento(alimento)
-                    url = "http://localhost:2020/alimento_guardar/"
+                    url = "https://tienda-mascota.herokuapp.com/alimento_guardar/"
                     body = {
                         "codigoAlimento": codigoAlimento,
                         "tipoAlimento": tipo_alimento,
@@ -191,7 +191,7 @@ if __name__ == '__main__':
                                       descripcionAccesorio, usoAccesorio )
                 try:
                     inventario.agregar_accesorio(accesorio)
-                    url = "http://localhost:2020/accesorio_guardar/"
+                    url = "https://tienda-mascota.herokuapp.com/accesorio_guardar/"
                     body = {
                         "codigoAccesorio": codigoAccesorio,
                         "nombre": nombreAccesorio,
@@ -208,36 +208,7 @@ if __name__ == '__main__':
 
             elif ans == "4":
                 registrar_cliente()
-                # codigoCliente = str(input("Ingrse el codigo del cliente:"))
-                # nombreCliente = str(input("Ingrese el nombre del cliente:"))
-                # cedulaCliente = str(input("Ingrese la cedula del cliente:"))
-                # apellidoCliente = str(input("Ingrese el apellido del cliente:"))
-                # generoCliente = str(input("Ingrese el genero del cliente:"))
-                # edadCliente = int(input("Ingrese la edad del cliente"))
-                # direccionCliente = str(input("Ingrese la direccion de residencia del cliente:"))
-                # correoCliente = str(input("Ingrese el correo de contacto del cliente:"))
-                # tiempoCliente = str(input("Ingrese el tiempo que lleva la persona siendo su cliente:"))
-                # cliente = Cliente(codigoCliente, nombreCliente, apellidoCliente, cedulaCliente, generoCliente
-                #                   , direccionCliente, correoCliente, edadCliente, tiempoCliente)
-                # try:
-                #     inventario.agregar_cliente(cliente)
-                #     url = "http://localhost:2020/cliente_guardar/"
-                #     body = {
-                #         "codigoCliente": codigoCliente,
-                #         "nombre": nombreCliente,
-                #         "apellido": apellidoCliente,
-                #         "cedula": cedulaCliente,
-                #         "genero": generoCliente,
-                #         "direccion": direccionCliente,
-                #         "correo": correoCliente,
-                #         "edad": edadCliente,
-                #         "tiempoCliente": tiempoCliente,
-                #     }
-                #     response = requests.request("POST", url, data=body)
-                #     print(response.status_code)
-                #     print("\n Se agrego el nuevo cliente con exito en bd")
-                # except Exception as ex:
-                #     print(ex)
+
 
             elif ans == "5":
                 codigoEmpleado = str(input("Ingrse el codigo del empleado:"))
@@ -256,7 +227,7 @@ if __name__ == '__main__':
                                     edadEmpleado, direccionEmpleado, correoEmpleado, horarioEmpleado)
                 try:
                     inventario.agregar_empleado(empleado)
-                    url = "http://localhost:2020/empleado_guardar/"
+                    url = "https://tienda-mascota.herokuapp.com/empleado_guardar/"
                     body = {
                         "codigo": codigoEmpleado,
                         "nombre": nombreEmpleado,
@@ -297,7 +268,7 @@ if __name__ == '__main__':
                           , direccionCliente, correoCliente, edadCliente, tiempoCliente)
         try:
             inventario.agregar_cliente(cliente)
-            url = "http://localhost:2020/cliente_guardar/"
+            url = "https://tienda-mascota.herokuapp.com/cliente_guardar/"
             body = {
                 "codigoCliente": codigoCliente,
                 "nombre": nombreCliente,
@@ -355,7 +326,7 @@ def actualizarInformacion():
                 caracteristica = input("Ingrese la caracteristica que quiere editar:")
                 valor = input("Ingrese el valor por el cual quiere reemplazarla:")
                 atributos[caracteristica] = valor
-            url = "http://localhost:2020/mascota_actualizar/" + codigoMascota
+            url = "https://tienda-mascota.herokuapp.com/mascota_actualizar/" + codigoMascota
             body = {
 
                 "tipoMascota": atributos["tipoMascota"],
@@ -386,7 +357,7 @@ def actualizarInformacion():
                 caracteristica = input("Ingrese la caracteristica que quiere editar:")
                 valor = input("Ingrese el valor por el cual quiere reemplazarla:")
                 atributos[caracteristica] = valor
-            url = "http://localhost:2020/alimento_actualizar/" + codigoAlimento
+            url = "https://tienda-mascota.herokuapp.com/alimento_actualizar/" + codigoAlimento
             body = {
                 "tipoAlimento": atributos["tipoAlimento"],
                 "nombreProducto": atributos["nombreProducto"],
@@ -414,7 +385,7 @@ def actualizarInformacion():
                 caracteristica = input("Ingrese la caracteristica que quiere editar:")
                 valor = input("Ingrese el valor por el cual quiere reemplazarla:")
                 atributos[caracteristica] = valor
-            url = "http://localhost:2020/accesorio_actualizar/" + codigoAccesorio
+            url = "https://tienda-mascota.herokuapp.com/accesorio_actualizar/" + codigoAccesorio
             body = {
                 "nombreAccesorio": atributos["nombreAccesorio"],
                 "precioAccesorio": atributos["precioAccesorio"],
@@ -445,7 +416,7 @@ def actualizarInformacion():
                 caracteristica = input("Ingrese la caracteristica que quiere editar:")
                 valor = input("Ingrese el valor por el cual quiere reemplazarla:")
                 atributos[caracteristica] = valor
-            url = "http://localhost:2020/cliente_actualizar/" + codigoCliente
+            url = "https://tienda-mascota.herokuapp.com/cliente_actualizar/" + codigoCliente
             body = {
                 "nombre": atributos["nombre"],
                 "apellido": atributos["apellido"],
@@ -482,7 +453,7 @@ def actualizarInformacion():
                 caracteristica = input("Ingrese la caracteristica que quiere editar:")
                 valor = input("Ingrese el valor por el cual quiere reemplazarla:")
                 atributos[caracteristica] = valor
-            url = "http://localhost:2020/empleado_actualizar/" + codigoEmpleado
+            url = "https://tienda-mascota.herokuapp.com/empleado_actualizar/" + codigoEmpleado
             body = {
                 "nombre": atributos["nombre"],
                 "apellido": atributos["apellido"],
@@ -527,7 +498,7 @@ def eliminarInformacion():
                           2. No""")
                 confirmacion = input("cual de las opciones quieres?:")
                 if confirmacion == "1":
-                    url = "http://localhost:2020/mascota_eliminar/" + codigoMascota
+                    url = "https://tienda-mascota.herokuapp.com/mascota_eliminar/" + codigoMascota
                     response = requests.request("DELETE", url)
                     print(response.status_code)
                 elif confirmacion == "2":
@@ -548,7 +519,7 @@ def eliminarInformacion():
                           2. No""")
                 confirmacion = input("cual de las opciones quieres?:")
                 if confirmacion == "1":
-                    url = "http://localhost:2020/alimento_eliminar/" + codigoAlimento
+                    url = "https://tienda-mascota.herokuapp.com/alimento_eliminar/" + codigoAlimento
                     response = requests.request("DELETE", url)
                     print(response.status_code)
                 elif confirmacion == "2":
@@ -569,7 +540,7 @@ def eliminarInformacion():
                           2. No""")
                 confirmacion = input("cual de las opciones quieres?:")
                 if confirmacion == "1":
-                    url = "http://localhost:2020/accesorio_eliminar/" + codigoAccesorio
+                    url = "https://tienda-mascota.herokuapp.com/accesorio_eliminar/" + codigoAccesorio
                     response = requests.request("DELETE", url)
                     print(response.status_code)
                 elif confirmacion == "2":
@@ -895,7 +866,7 @@ def venderMascota(inventario):
     saverMascota.actualizar_mascota(mascotas[0], mascotas[0].codigoMascota)
     try:
         inventario.agregar_venta(venta)
-        url = "http://localhost:2020/venta_guardar/"
+        url = "https://tienda-mascota.herokuapp.com/venta_guardar/"
         body = {
             "cantidadVenta": cantidad,
             "precioUnidad": mascotas[0].precio,
@@ -961,7 +932,7 @@ def venderAccesorio(inventario):
     saverAccesorios.actualizar_accesorio(accesorios[0], accesorios[0].codigoAccesorio)
     try:
         inventario.agregar_venta(venta)
-        url = "http://localhost:2020/venta_guardar/"
+        url = "https://tienda-mascota.herokuapp.com/venta_guardar/"
         body = {
             "cantidadVenta": cantidad,
             "precioUnidad": accesorios[0].precio,
@@ -1027,7 +998,7 @@ def venderAlimento(inventario):
     saverAlimentos.actualizar_alimento(alimentos[0], alimentos[0].codigoAlimento)
     try:
         inventario.agregar_venta(venta)
-        url = "http://localhost:2020/venta_guardar/"
+        url = "https://tienda-mascota.herokuapp.com/venta_guardar/"
         body = {
             "cantidadVenta": cantidad,
             "precioUnidad": alimentos[0].precio,
