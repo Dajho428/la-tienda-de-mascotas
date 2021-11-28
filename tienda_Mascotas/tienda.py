@@ -145,6 +145,25 @@ if __name__ == '__main__':
 
         return clientes
 
+    def cargarEmpleados():
+        url = "http://tienda-mascota.herokuapp.com/obtener-empleados/"
+
+        payload={}
+        headers = {}
+
+        response = requests.request("GET", url, headers=headers, data=payload)
+
+        response= jsonpickle.loads(response.text)
+
+        empleados=[]
+        for i in range(len(response)):
+            empleado= Empleado(response[i]['codigo'],response[i]['nombre'],response[i]['cedula'],
+                                 response[i]['apellido'],response[i]['cargo'],response[i]['salario'],response[i]['genero']
+                             ,response[i]['edad'],response[i]['direccion'],response[i]['correo'],response[i]['horario'])
+            empleados.append(empleado)
+
+        return empleados
+
 
 
 
@@ -159,12 +178,8 @@ if __name__ == '__main__':
         accesorios= cargarAccesorios()
         alimentos= cargarAlimentos()
         clientes=cargarClientes()
-        #empleados= cargarEmpleados()
-        #mascotas = saverMascota.consultar_tabla_mascota()
-        #alimentos = saverAlimentos.consultar_tabla_alimento()
-        #accesorios = saverAccesorios.consultar_tabla_accesorio()
-        #clientes = saverCliente.consultar_tabla_cliente()
-        empleados = saverEmpleado.consultar_tabla_empleado()
+        empleados= cargarEmpleados()
+
         for mascota in mascotas:
             inventario.agregar_mascota(mascota)
         for alimento in alimentos:
@@ -414,7 +429,7 @@ def actualizarInformacion():
 
             }
             response = requests.request("PUT", url, data=body)
-            print(response.status_code)
+
         elif ansAct == "2":
             codigoAlimento = input("Ingrese el codigo del alimento que quiere editar:")
             espc = Especificacion()
@@ -442,7 +457,7 @@ def actualizarInformacion():
                 "precio": atributos["precio"],
             }
             response = requests.request("PUT", url, data=body)
-            print(response.status_code)
+
         elif ansAct == "3":
             codigoAccesorio = input("Ingrese el codigo del accesorio que quiere editar:")
             espc = Especificacion()
@@ -470,7 +485,7 @@ def actualizarInformacion():
                 "usoAccesorio": atributos["usoAccesorio"],
             }
             response = requests.request("PUT", url, data=body)
-            print(response.status_code)
+
         elif ansAct == "4":
             codigoCliente = input("Ingrese el codigo del cliente que quiere editar:")
             espc = Especificacion()
@@ -889,7 +904,7 @@ def generarVenta():
         elif respVenta == "4":
             respVenta = False
         else:
-            print("Ingrese una de las opciones maldito fracasado!")
+            print("Ingrese una de las opciones validas!")
 
 
 def venderMascota(inventario):
@@ -936,7 +951,7 @@ def venderMascota(inventario):
             espcCliente.agregar_parametro("codigoCliente", codigoCliente)
             clientes = list(inventario.buscar_cliente(espcCliente))
         else:
-            print("Ingrese una opcion valida estupido")
+            print("Ingrese una opcion valida ")
     precioTotal = cantidad * mascotas[0].precio
     venta = Venta(clientes[0], empleados[0], mascotas[0].nombre, cantidad, mascotas[0].precio, precioTotal)
     mascotas[0].cantidad = mascotas[0].cantidad - cantidad
@@ -1002,7 +1017,7 @@ def venderAccesorio(inventario):
             espcCliente.agregar_parametro("codigoCliente", codigoCliente)
             clientes = list(inventario.buscar_cliente(espcCliente))
         else:
-            print("Ingrese una opcion valida estupido")
+            print("Ingrese una opcion valida")
     precioTotal = cantidad * accesorios[0].precio
     venta = Venta(clientes[0], empleados[0], accesorios[0].nombreAccesorio, cantidad, accesorios[0].precio, precioTotal)
     accesorios[0].cantidad = accesorios[0].cantidad - cantidad
@@ -1068,7 +1083,7 @@ def venderAlimento(inventario):
             espcCliente.agregar_parametro("codigoCliente", codigoCliente)
             clientes = list(inventario.buscar_cliente(espcCliente))
         else:
-            print("Ingrese una opcion valida estupido")
+            print("Ingrese una opcion valida")
     precioTotal = cantidad * alimentos[0].precio
     venta = Venta(clientes[0], empleados[0], alimentos[0].nombreProducto, cantidad, alimentos[0].precio, precioTotal)
     alimentos[0].cantidad = alimentos[0].cantidad - cantidad
