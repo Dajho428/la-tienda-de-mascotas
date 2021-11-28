@@ -1,9 +1,20 @@
 import falcon
 import waitress
 from falcon import App
+from jsonpickle import json
 
 from tienda_Mascotas.Dominio.alimento import Alimento
 from tienda_Mascotas.Infraestructura.persistencia_alimento import Persistencia_alimento
+
+class Obtener_alimentos():
+    def on_get(self,req,resp):
+        db=Persistencia_alimento()
+        accesorios=db.consultar_tabla_alimento()
+        resultado=[]
+        for accesorio in accesorios:
+            resultado.append(accesorio.__dict__)
+        resp.body=json.dumps(resultado)
+        resp.status=200
 
 
 class Api_alimento():
@@ -66,6 +77,7 @@ def iniciar(api) -> App:
     api.add_route("/alimento_guardar/", Api_alimento())
     api.add_route("/alimento_actualizar/{codigoAlimento}", Api_alimento())
     api.add_route("/alimento_eliminar/{codigoAlimento}", Api_alimento())
+    api.add_route("/obtener-alimentos/", Obtener_alimentos())
     return api
 
 

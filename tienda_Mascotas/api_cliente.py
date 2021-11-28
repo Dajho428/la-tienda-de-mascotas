@@ -1,10 +1,21 @@
 import falcon
 import waitress
 from falcon import App
+from jsonpickle import json
 
 from tienda_Mascotas.Dominio.cliente import Cliente
+from tienda_Mascotas.Infraestructura.persistencia_accesorio import Persistencia_accesorio
 from tienda_Mascotas.Infraestructura.persistencia_cliente import Persistencia_cliente
 
+class Obtener_clientes():
+    def on_get(self,req,resp):
+        db=Persistencia_cliente()
+        accesorios=db.consultar_tabla_cliente()
+        resultado=[]
+        for accesorio in accesorios:
+            resultado.append(accesorio.__dict__)
+        resp.body=json.dumps(resultado)
+        resp.status=200
 
 class Api_cliente():
 
@@ -66,6 +77,7 @@ def iniciar(api) -> App:
     api.add_route("/cliente_guardar/", Api_cliente())
     api.add_route("/cliente_actualizar/{codigoCliente}", Api_cliente())
     api.add_route("/cliente_eliminar/{codigoCliente}/", Api_cliente())
+    api.add_route("/obtener-clientes/", Obtener_clientes())
     return api
 
 

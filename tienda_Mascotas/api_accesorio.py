@@ -1,8 +1,32 @@
 import falcon
 from falcon import App
+from jsonpickle import json
 
 from tienda_Mascotas.Dominio.accesorio import Accesorio
 from tienda_Mascotas.Infraestructura.persistencia_accesorio import Persistencia_accesorio
+
+class Obtener_accesorio():
+    def on_get(self,req,resp,codigoAccesorio):
+        db=Persistencia_accesorio()
+        accesorios=db.consultar_tabla_accesorio()
+        for accesorio in accesorios:
+            if accesorio.codigoAccesorio==codigoAccesorio:
+                resp.body=json.dumps(accesorio.__dict__)
+                resp.status=200
+                break
+
+class Obtener_accesorios():
+    def on_get(self,req,resp):
+        db=Persistencia_accesorio()
+        accesorios=db.consultar_tabla_accesorio()
+        resultado=[]
+        for accesorio in accesorios:
+            resultado.append(accesorio.__dict__)
+        resp.body=json.dumps(resultado)
+        resp.status=200
+
+
+
 
 
 class Api_accesorio():
@@ -69,6 +93,8 @@ def iniciar(api) -> App:
     api.add_route("/accesorio_guardar/", Api_accesorio())
     api.add_route("/accesorio_actualizar/{codigoAccesorio}", Api_accesorio())
     api.add_route("/accesorio_eliminar/{codigoAccesorio}", Api_accesorio())
+    api.add_route("/obtener-accesorio/{codigoAccesorio}", Obtener_accesorio())
+    api.add_route("/obtener-accesorio/", Obtener_accesorios())
     return api
 
 

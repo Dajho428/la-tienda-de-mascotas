@@ -1,9 +1,20 @@
 import falcon
 import waitress
 from falcon import App
+from jsonpickle import json
 
 from tienda_Mascotas.Dominio.empleado import Empleado
 from tienda_Mascotas.Infraestructura.persistencia_empleado import Persistencia_empleado
+
+class Obtener_empleados():
+    def on_get(self,req,resp):
+        db=Persistencia_empleado()
+        accesorios=db.consultar_tabla_empleado()
+        resultado=[]
+        for accesorio in accesorios:
+            resultado.append(accesorio.__dict__)
+        resp.body=json.dumps(resultado)
+        resp.status=200
 
 
 class Api_empleado():
@@ -66,5 +77,6 @@ def iniciar(api) -> App:
     api.add_route("/empleado_guardar/", Api_empleado())
     api.add_route("/empleado_actualizar/{codigoEmpleado}", Api_empleado())
     api.add_route("/empleado_eliminar/{codigoEmpleado}", Api_empleado())
+    api.add_route("/obtener-empleados/", Obtener_empleados())
     return api
 

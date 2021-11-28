@@ -1,8 +1,20 @@
 import falcon
 
 from falcon import App
+from jsonpickle import json
+
 from tienda_Mascotas.Dominio.mascota import Mascota
 from tienda_Mascotas.Infraestructura.persistencia_mascota import Persistencia_mascota
+
+class Obtener_mascotas():
+    def on_get(self,req,resp):
+        db=Persistencia_mascota()
+        accesorios=db.consultar_tabla_mascota()
+        resultado=[]
+        for accesorio in accesorios:
+            resultado.append(accesorio.__dict__)
+        resp.body=json.dumps(resultado)
+        resp.status=200
 
 
 class Api_mascota():
@@ -67,4 +79,5 @@ def iniciar(api) -> App:
     api.add_route("/mascota_guardar/", Api_mascota())
     api.add_route("/mascota_actualizar/{codigoMascota}", Api_mascota())
     api.add_route("/mascota_eliminar/{codigoMascota}", Api_mascota())
+    api.add_route("/obtener-mascotas/", Obtener_mascotas())
     return api
