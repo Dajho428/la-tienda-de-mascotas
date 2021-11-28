@@ -1,3 +1,5 @@
+import jsonpickle
+
 from tienda_Mascotas.Dominio.mascota import Mascota
 from tienda_Mascotas.Dominio.inventario import Inventario
 from tienda_Mascotas.Dominio.alimento import Alimento
@@ -69,25 +71,99 @@ if __name__ == '__main__':
     saverVenta = Persistencia_venta()
     saverVenta.connect()
 
-    # def actualizarMascota(inventario):
-    #     espec = Especificacion()
-    #     mascota = Mascota("123", "Gato", "Persa", "Michi", 1, 150000.0, 10)
-    #     espec.agregar_parametro("codigoMascota", mascota.codigoMascota)
-    #     mascota_aux = list(inventario.buscar_mascota(espec))
-    #     mascota._actualizar(mascota_aux, mascota_aux.codigoMascota)
 
-    # Metodo generar configuracion, el cual trae la configuracion que esta guardada en archivo plano json
+    def cargarAccesorios():
+        url = "http://tienda-mascota.herokuapp.com/obtener-accesorio/"
+
+        payload={}
+        headers = {}
+
+        response = requests.request("GET", url, headers=headers, data=payload)
+
+        response= jsonpickle.loads(response.text)
+
+        accesorios=[]
+        for i in range(len(response)):
+            accesorio= Accesorio(response[i]['codigoAccesorio'],response[i]['nombreAccesorio'],response[i]['precio'],
+                                 response[i]['cantidad'],response[i]['descripcionAccesorio'],response[i]['usoAccesorio'])
+            accesorios.append(accesorio)
+
+        return accesorios
+
+    def cargarMascotas():
+        url = "http://tienda-mascota.herokuapp.com/obtener-mascotas/"
+
+        payload={}
+        headers = {}
+
+        response = requests.request("GET", url, headers=headers, data=payload)
+
+        response= jsonpickle.loads(response.text)
+
+        mascotas=[]
+        for i in range(len(response)):
+            mascota= Mascota(response[i]['codigoMascota'],response[i]['tipoMascota'],response[i]['raza'],
+                                 response[i]['nombre'],response[i]['edad'],response[i]['precio'],response[i]['cantidad'])
+            mascotas.append(mascota)
+
+        return mascotas
+
+    def cargarAlimentos():
+        url = "http://tienda-mascota.herokuapp.com/obtener-alimentos/"
+
+        payload={}
+        headers = {}
+
+        response = requests.request("GET", url, headers=headers, data=payload)
+
+        response= jsonpickle.loads(response.text)
+
+        alimentos=[]
+        for i in range(len(response)):
+            alimento= Alimento(response[i]['codigoAlimento'],response[i]['tipoAlimento'],response[i]['nombreProducto'],
+                                 response[i]['cantidadAlimento'],response[i]['cantidadContenido'],response[i]['precio'])
+            alimentos.append(alimento)
+
+        return alimentos
+
+    def cargarClientes():
+        url = "http://tienda-mascota.herokuapp.com/obtener-clientes/"
+
+        payload={}
+        headers = {}
+
+        response = requests.request("GET", url, headers=headers, data=payload)
+
+        response= jsonpickle.loads(response.text)
+
+        clientes=[]
+        for i in range(len(response)):
+            cliente= Cliente(response[i]['codigoCliente'],response[i]['nombre'],response[i]['apellido'],
+                                 response[i]['cedula'],response[i]['genero'],response[i]['direccion'],response[i]['correo']
+                             ,response[i]['edad'],response[i]['tiempoCliente'])
+            clientes.append(cliente)
+
+        return clientes
+
+
+
 
     """En el metodo generarInventario cargamos los datos que estan guardados tanto en archivos planos json y 
     los que estan guardados en base de datos sqlite para utilizarlos en uno solo, en este caso la clase inventario"""
 
 
     def generarInventario():
+
         inventario = Inventario()
-        mascotas = saverMascota.consultar_tabla_mascota()
-        alimentos = saverAlimentos.consultar_tabla_alimento()
-        accesorios = saverAccesorios.consultar_tabla_accesorio()
-        clientes = saverCliente.consultar_tabla_cliente()
+        mascotas= cargarMascotas()
+        accesorios= cargarAccesorios()
+        alimentos= cargarAlimentos()
+        clientes=cargarClientes()
+        #empleados= cargarEmpleados()
+        #mascotas = saverMascota.consultar_tabla_mascota()
+        #alimentos = saverAlimentos.consultar_tabla_alimento()
+        #accesorios = saverAccesorios.consultar_tabla_accesorio()
+        #clientes = saverCliente.consultar_tabla_cliente()
         empleados = saverEmpleado.consultar_tabla_empleado()
         for mascota in mascotas:
             inventario.agregar_mascota(mascota)
@@ -400,7 +476,7 @@ def actualizarInformacion():
             espc = Especificacion()
             espc.agregar_parametro("codigoCliente", codigoCliente)
             cliente = list(inventario.buscar_cliente(espc))
-            print(len(cliente))
+            print(cliente)
             atributos = {}
             atributos["codigoCliente"] = codigoCliente
             atributos["nombre"] = cliente[0].nombre
@@ -413,11 +489,12 @@ def actualizarInformacion():
             atributos["tiempoCliente"] = cliente[0].tiempoCliente
             cantidadAtributos = int(input("Ingrese la cantidad de caracteristicas del cliente que quiere editar:"))
             for i in range(0, cantidadAtributos):
-                caracteristica = input("Ingrese la caracteristica que quiere editar:")
+                caracteristica = str(input("Ingrese la caracteristica que quiere editar:"))
                 valor = input("Ingrese el valor por el cual quiere reemplazarla:")
                 atributos[caracteristica] = valor
-            url = "https://tienda-mascota.herokuapp.com/cliente_actualizar/" + codigoCliente
+            url = "https://tienda-mascota.herokuapp.com/cliente_actualizar/"+codigoCliente
             body = {
+                "codigoCliente":atributos['codigoCliente'],
                 "nombre": atributos["nombre"],
                 "apellido": atributos["apellido"],
                 "cedula": atributos["cedula"],
@@ -428,7 +505,7 @@ def actualizarInformacion():
                 "tiempoCliente": atributos["tiempoCliente"],
             }
             response = requests.request("PUT", url, data=body)
-            print(response.status_code)
+
 
         elif ansAct == "5":
             codigoEmpleado = input("Ingrese el codigo del empleado que quiere editar:")
@@ -467,7 +544,7 @@ def actualizarInformacion():
                 "horario": atributos["horario"],
             }
             response = requests.request("PUT", url, data=body)
-            print(response.status_code)
+
         else:
             ansAct = False
 
